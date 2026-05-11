@@ -25,11 +25,12 @@ jobs:
                   docker compose up -d
               env:
                   DOCKER_COMPOSE_COMMAND_OPTS: "-inMemory"
-                  AWS_ACCESS_KEY_ID: "test"
-                  AWS_SECRET_ACCESS_KEY: "test"
-                  AWS_DEFAULT_REGION: "us-west-2"
-                  DYNAMODB_LOCAL_ENDPOINT: "http://localhost:8000"
             - name: test data creation
               run: |
                   ./scripts/dynamodb/create-table.sh
                   go test -v ./...
+              env:
+                  AWS_ACCESS_KEY_ID: "test"
+                  AWS_SECRET_ACCESS_KEY: "test"
+                  AWS_DEFAULT_REGION: "us-west-2"
+                  DYNAMODB_LOCAL_ENDPOINT: "http://localhost:8000"
