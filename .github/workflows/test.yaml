@@ -30,7 +30,7 @@ jobs:
                   ./scripts/dynamodb/create-table.sh
                   go test -v ./...
               env:
-                  AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY_ID }}
-                  AWS_SECRET_ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
+                  AWS_ACCESS_KEY_ID: ${{ vars.ACCESS_KEY_ID }}
+                  AWS_SECRET_ACCESS_KEY: ${{ vars.ACCESS_KEY }}
                   AWS_DEFAULT_REGION: "us-west-2"
                   DYNAMODB_LOCAL_ENDPOINT: "http://localhost:8000"
