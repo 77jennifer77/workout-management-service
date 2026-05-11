@@ -1,35 +1,42 @@
-package workout
 
-import "fmt"
+package main
 
-type Workout struct {
-	Owner     string     `json:"owner"`
-	Name      string     `json:"name"`
-	Category  string     `json:"category"`
-	Equipment Equipment  `json:"equipment"`
-	Exercises []Exercise `json:"exercises"`
+import (
+	"net/http"
+
+	"github.com/SamirMarin/test-golang-commands/internal/workout"
+	"github.com/labstack/echo/v4"
+)
+
+func main() {
+	e := echo.New()
+	e.POST("/create", create)
+	e.POST("/get", create)
+	e.Logger.Fatal(e.Start(":1323"))
 }
 
-type Equipment struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
+func create(c echo.Context) error {
+	workout := workout.Workout{}
+	if err := c.Bind(&workout); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+	err := workout.CreateWorkout()
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
+	return c.String(http.StatusOK, "Workout created")
 }
 
-type Exercise struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Sets        int    `json:"reps"`
-	Time        int    `json:"time"`
-}
+func get(c echo.Context) error {
+	workout := workout.Workout{}
+	if err := c.Bind(&workout); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+	err := workout.GetWorkout()
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
 
-// CreateWorkout creates a workout, save new workout to db
-func (w *Workout) CreateWorkout() error {
-	fmt.Println(w)
-	return nil
-}
-
-// GetWorkout gets a workout from db
-func (w *Workout) GetWorkout() error {
-	fmt.Println(w)
-	return nil
+	return c.JSON(http.StatusOK, workout)
 }
