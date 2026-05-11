@@ -1,7 +1,7 @@
 package workout
 
 import (
-	"github.com/SamirMarin/workout-management-service/internal/dynamodb"
+	"github.com/77jennifer77/workout-management-service/internal/dynamodb"
 	"github.com/aws/aws-sdk-go/aws"
 	awsDynamoDb "github.com/aws/aws-sdk-go/service/dynamodb"
 	awsDynamoDbAttribute "github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"

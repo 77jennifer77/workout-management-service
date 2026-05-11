@@ -2,13 +2,20 @@
 package main
 
 import (
+	"log"
 	"net/http"
 
-	"github.com/SamirMarin/test-golang-commands/internal/workout"
+	"github.com/77jennifer77/workout-management-service/internal/workout"
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 )
 
 func main() {
+	// Load .env file
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env file found")
+	}
+
 	e := echo.New()
 	e.POST("/create", create)
 	e.POST("/get", create)

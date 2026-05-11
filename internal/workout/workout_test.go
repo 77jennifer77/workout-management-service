@@ -1,11 +1,21 @@
 package workout
 
 import (
+	"log"
+	"testing"
+
 	"github.com/aws/aws-sdk-go/aws"
 	awsDynamoDb "github.com/aws/aws-sdk-go/service/dynamodb"
+	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
+
+func init() {
+	// Load .env file from project root (two directories up from test location)
+	if err := godotenv.Load("../../.env"); err != nil {
+		log.Println("No .env file found")
+	}
+}
 
 func TestToDynamoDbAttribute(t *testing.T) {
 	workout := &Workout{
