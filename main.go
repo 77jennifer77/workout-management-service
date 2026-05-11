@@ -1,22 +1,35 @@
-package main
+package workout
 
-import (
-	"net/http"
+import "fmt"
 
-	"github.com/labstack/echo/v4"
-)
-
-func main() {
-	e := echo.New()
-    e.POST("/create", create)
-    e.POST("/get", get)
-	e.Logger.Fatal(e.Start(":1323"))
+type Workout struct {
+	Owner     string     `json:"owner"`
+	Name      string     `json:"name"`
+	Category  string     `json:"category"`
+	Equipment Equipment  `json:"equipment"`
+	Exercises []Exercise `json:"exercises"`
 }
 
-func create(c echo.Context) error {
-	return c.String(http.StatusOK, "Workout created")
+type Equipment struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
 }
 
-func get(c echo.Context) error {
-	return c.JSON(http.StatusOK, "Getting workout")
+type Exercise struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Sets        int    `json:"reps"`
+	Time        int    `json:"time"`
+}
+
+// CreateWorkout creates a workout, save new workout to db
+func (w *Workout) CreateWorkout() error {
+	fmt.Println(w)
+	return nil
+}
+
+// GetWorkout gets a workout from db
+func (w *Workout) GetWorkout() error {
+	fmt.Println(w)
+	return nil
 }
