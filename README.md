@@ -1,5 +1,6 @@
 # workout-management-service
-Service that manages the creation and querying of workouts
+Service that manages the creation and querying of workouts. Github actions workshop with practical examples
+https://samirs-organization-6.gitbook.io/github-actions-by-example
 
 ## Running the service locally
 1. Start local running dynamodb
