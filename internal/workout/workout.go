@@ -8,7 +8,47 @@ import (
 	"strconv"
 )
 
-...
+type Workout struct {
+	Owner     string     `json:"owner"`
+	Name      string     `json:"name"`
+	Category  string     `json:"category"`
+	Equipment Equipment  `json:"equipment"`
+	Exercises []Exercise `json:"exercises"`
+}
+
+type Equipment struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
+}
+
+type Exercise struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Sets        int    `json:"sets"`
+	Time        int    `json:"time"`
+}
+
+var tableName = "Workout"
+
+// CreateWorkout creates a workout, save new workout to db
+func (w *Workout) CreateWorkout() error {
+	dynamoDbClient := dynamodb.NewClient(tableName)
+	err := dynamoDbClient.StoreItem(w)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+func (w *Workout) GetWorkout() error {
+	dynamoDbClient := dynamodb.NewClient(tableName)
+	err, getItemOutput := dynamoDbClient.GetItem(w)
+	if err != nil {
+		return err
+	}
+	err = awsDynamoDbAttribute.UnmarshalMap(getItemOutput.Item, w)
+	return nil
+}
+
 func (w *Workout) ToDynamoDbAttribute() map[string]*awsDynamoDb.AttributeValue {
 	exerciseList := make([]*awsDynamoDb.AttributeValue, len(w.Exercises))
 	for i, exercise := range w.Exercises {
@@ -41,10 +81,10 @@ func (w *Workout) ToDynamoDbAttribute() map[string]*awsDynamoDb.AttributeValue {
 		},
 		"Equipment": {
 			M: map[string]*awsDynamoDb.AttributeValue{
-				"name": {
+				"Name": {
 					S: aws.String(w.Equipment.Name),
 				},
-				"description": {
+				"Description": {
 					S: aws.String(w.Equipment.Description),
 				},
 			},
