@@ -1,0 +1,16 @@
+name: test-build-deploy with reusable workflows
+
+on:
+    push:
+        branches:
+            - main
+
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    test-build-deploy:
+        uses: 77jennifer77/github-actions-by-example-reusable-workflows/.github/workflows/reusable-test-build-deploy.yaml@test-build-deploy-v0
+        with:
+            image-name: user-mgmt
