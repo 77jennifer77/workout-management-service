@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: workout-management-service
-          image: ghcr.io/77jennifer77/workout-management-service:65ff7d3151594b8f06ed183559415c2083fe8583
+          image: ghcr.io/77jennifer77/workout-management-service:f5616a1d8721c04b256953ebb6611a17c0153790
           ports:
             - containerPort: 1323
